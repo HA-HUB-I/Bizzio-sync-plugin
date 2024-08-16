@@ -31,7 +31,9 @@ class Bizzio_Custom_Login {
 	 */
 	public function enqueue_login_stylesheet(): void {
 		$version = '1.0.0'; /*  You can dynamically generate this based on the file's modification time. */
-		wp_enqueue_style( 'custom-login', BIZZIO_SYNC_URL . 'assets/css/bizzio-sync-admin.css', array(), $version );
+		wp_enqueue_style( 'custom-login', BIZZIO_SYNC_URL . 'assets/css/custom-login.css', array(), $version );
+		wp_enqueue_style('bizziosync-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
 	}
 
 	/**

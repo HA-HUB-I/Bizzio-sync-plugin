@@ -56,27 +56,6 @@ Data Synchronization Hooks Class: 'class-bizzio-sync-hooks-data-sync.php' <br>
 User Management Hooks Class: 'class-bizzio-sync-hooks-user.php' <br>
 Central Hook Loader Class: 'class-bizzio-sync-hook-loader.php' <br>
 
-``` bizzio-sync/ <br>
-│
-├── includes/ <br>
-│   ├── hooks/ <br>
-│   │   ├── class-bizzio-sync-hooks-user.php <br>
-│   │   ├── class-bizzio-sync-hooks-data-sync.php <br>
-│   │   ├── class-bizzio-sync-hooks-notifications.php <br>
-│   │   └── class-bizzio-sync-hook-loader.php <br>
-│   ├── class-bizzio-sync-init.php <br>
-│   ├── class-bizzio-sync-admin.php <br>
-│   ├── class-bizzio-sync-logger.php <br>
-│   ├── class-bizzio-sync-activation.php <br>
-│   └── class-bizzio-sync-deactivation.php <br>
-│
-├── assets/ <br>
-│   └── css/ <br>
-│       └── bizzio-sync-admin.css <br>
-│
-└── bizzio-sync.php <br>
-```
-
 ```
  /* Add a version number to the stylesheet for cache busting */ 
  $version = '1.0.0'; /*  You can dynamically generate this based on the file's modification time. */
