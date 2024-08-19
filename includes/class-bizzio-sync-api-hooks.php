@@ -22,7 +22,7 @@ class BizzioSyncApiHooks {
 	public function render_api_button() {
 		?>
 		<div class="wrap">
-			<h1>Send Data to External API</h1>
+			<h1><?php echo __('Send Data to External API' , 'bizzio-sync' ); ?></h1>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<?php wp_nonce_field( 'bizzio_sync_send_data_nonce', 'bizzio_sync_send_data_nonce' ); ?>
 				<input type="hidden" name="action" value="bizzio_sync_send_data">
@@ -36,7 +36,7 @@ class BizzioSyncApiHooks {
 		// Verify nonce
 		if ( ! isset( $_POST['bizzio_sync_send_data_nonce'] ) || ! wp_verify_nonce( $_POST['bizzio_sync_send_data_nonce'], 'bizzio_sync_send_data_nonce' ) ) {
 			/* wp_die('Invalid nonce'); */
-			Bizzio_Sync_Logger::log( 'Invalid nonce' );
+			Bizzio_Sync_Logger::log(__( 'Invalid nonce' ,  'bizzio-sync' ) );
 		}
 
         $args = array(
@@ -75,7 +75,7 @@ class BizzioSyncApiHooks {
 		 if ( is_wp_error( $response ) ) {
 			 $error_message = $response->get_error_message();
 			 /* wp_die('Request failed: ' . esc_html($error_message)); */
-			 Bizzio_Sync_Logger::log( 'Request failed:' . esc_html( $error_message ) );
+			 Bizzio_Sync_Logger::log(__( 'Request failed:' , 'bizzio-sync' . esc_html( $error_message ) ) );
 		 }
 
 		 // Process the response
@@ -83,11 +83,11 @@ class BizzioSyncApiHooks {
 		 if ( $response_code === 200 ) {
 			 /*  echo '<div class="updated notice"><p>Data sent successfully!</p></div>'; */
 			 wp_safe_redirect( add_query_arg( 'message', 'success', wp_get_referer() ) );
-			 Bizzio_Sync_Logger::log( 'Data sent successfully!' );
+			 Bizzio_Sync_Logger::log(__( 'Data sent successfully!' , 'bizzio-sync' ) );
 			 exit;
 		 } else {
 			 /* echo '<div class="error notice"><p>Failed to send data. HTTP Status: ' . esc_html($response_code) . '</p></div>'; */
-			 Bizzio_Sync_Logger::log( 'Failed to send data. HTTP Status' . esc_html( $response_code ) );
+			 Bizzio_Sync_Logger::log(__( 'Failed to send data. HTTP Status' , 'bizzio-sync' . esc_html( $response_code ) ) );
 			 wp_safe_redirect( add_query_arg( 'message', 'error', wp_get_referer() ) );
 			 exit;
 

@@ -1,62 +1,189 @@
-namespace 'BizzioSync' is correctly applied and referenced in all your classes.
+`README.md` file for plugin is essential to help users and developers understand how to use and extend your plugin. Below is a structured template for covering instructions on usage, class functions, translations, logging, namespace management, and more.
 
-<h1> Implement Logging Across Hooks </h1> - class-bizzio-sync-logger.php <br>
-"BizzioSyncLogger::log()" \\You can add logging to any hook in your plugin by inserting the BizzioSyncLogger::log() call in the appropriate place.<br>
+---
 
-The BizzioSyncLogger::log() method already checks if logging is enabled by retrieving the option 'bizzio_enable_logging'. <br>
-This ensures that logging only occurs when the user has enabled it via the plugin settings. <br>
+# Bizzio Sync Plugin
 
-The logs are stored in the WordPress database in the 'wp_options' table under a specific option name. In this case: <br>
+**Version**: 1.0.0  
+**Author**: Your Name  
+**Plugin URI**: https://example.com/  
+**Description**: A custom sync plugin that integrates various WordPress functionalities with external APIs and logs activities.
 
-Option Name: 'bizzio_sync_logs'<br>
-Database Table: 'wp_options'<br>
-Each log entry is an array containing:<br>
+## Table of Contents
 
-'date': The timestamp when the log was created.<br>
-'message': The log message itself.<br>
-![SQL LOG STORE](image-1.png)
+1. [Introduction](#introduction)
+2. [Installation](#installation)
+3. [Usage](#usage)
+    - [Bizzio_Sync_Logger](#bizzio_sync_logger)
+    - [Custom Hooks](#custom-hooks)
+    - [Translating Strings](#translating-strings)
+    - [Adding Actions](#adding-actions)
+4. [Class Structure and Namespaces](#class-structure-and-namespaces)
+    - [General Guidelines](#general-guidelines)
+    - [Adding New Classes](#adding-new-classes)
+5. [Troubleshooting](#troubleshooting)
+6. [Contributing](#contributing)
 
-example : <br>
-\\ For instance, if you want to log when the save_post hook is triggered (which happens whenever a post is saved):<br>
+---
+
+## Introduction
+
+The **Bizzio Sync Plugin** is designed to help developers integrate custom synchronization processes in WordPress, including interactions with external APIs. The plugin is built with a focus on extensibility, secure API requests, and efficient logging of operations.
+
+## Installation
+
+1. Upload the `bizzio-sync` folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the "Plugins" menu in WordPress.
+3. After activation, the plugin will start working based on the default settings.
+
+## Usage
+
+### Bizzio_Sync_Logger
+
+`Bizzio_Sync_Logger` is a custom class provided by the plugin for logging events and activities. It is designed to be used within any part of the plugin to log important information.
+
+**Example:**
+
+```php
+use BizzioSync\Bizzio_Sync_Logger;
+
+Bizzio_Sync_Logger::log(__('Synchronization started.', 'bizzio-sync'));
 ```
-add_action('save_post', function($post_id) {<br>
-    // Perform any necessary actions when a post is saved<br>
-      // Log the save post action<br>
-    BizzioSyncLogger::log("Post ID {$post_id} was saved.");<br>
-});
+
+- **Purpose**: Logs messages to a custom log file or database entry for debugging or tracking purposes.
+- **Function Signature**: `public static function log($message): void`
+- **Parameters**:
+  - `$message` (string): The message you want to log, preferably wrapped in the `__()` function for translation.
+  
+- **Usage Location**: Anywhere within the plugin where important operations occur that need to be logged.
+
+### Custom Hooks
+
+You can add custom hooks and actions using the `Bizzio_Sync_Hook_Loader` class. This class is responsible for managing the hooks in an organized manner.
+
+**Example of Adding a Custom Action:**
+
+```php
+use BizzioSync\Bizzio_Sync_Hook_Loader;
+
+Bizzio_Sync_Hook_Loader::add_action('init', 'my_custom_function');
+
+/**
+ * Function to be executed during the 'init' hook.
+ *
+ * @return void
+ */
+function my_custom_function(): void {
+    // Custom code here
+}
 ```
-[!TIP]
-Let’s assume you have several hooks in your plugin, such as: <br>
 
-* Custom hooks like 'bizzio_custom_hook'.<br>
-* Core WordPress hooks like 'init' and 'wp_footer'.<br>
+### Translating Strings
 
-![ADMIN MENU LOGS](image.png)
+The plugin is fully internationalized and ready for translation. Ensure that all strings are wrapped in translation functions like `__()` or `_e()`.
 
-![admin menu logs]
-> <h1>Plugin Structure</h1>
-bizzio-sync/ <br>
-│<br>
-├── includes/<br>
-│   ├── class-bizzio-sync-init.php<br>
-│   ├── class-bizzio-sync-admin.php<br>
-│   ├── class-bizzio-sync-hooks.php<br>
-│   ├── class-bizzio-sync-activation.php<br>
-│   └── class-bizzio-sync-logger.php   <-- Save the logger class<br>
-│<br>
-├── assets/<br>
-│   └── css/<br>
-│       └── bizzio-sync-admin.css<br>
-│<br>
-└── bizzio-sync.php <br> <
+Wrap all text in your plugin with WordPress's translation functions. Here are the most common functions you'll use:
 
-
-NEW UPDATE CLASS HOOK <br>
-Data Synchronization Hooks Class: 'class-bizzio-sync-hooks-data-sync.php' <br>
-User Management Hooks Class: 'class-bizzio-sync-hooks-user.php' <br>
-Central Hook Loader Class: 'class-bizzio-sync-hook-loader.php' <br>
-
+``` 
+__(): Returns a translated string.
+``` 
+_e(): Echoes a translated string.
+``` 
+_n(): Handles singular and plural forms.
+``` 
+esc_html__(), esc_attr__(): Escapes and returns a translated string for safe output.
+``` 
+esc_html_e(), esc_attr_e(): Escapes and echoes a translated string for safe output.
 ```
- /* Add a version number to the stylesheet for cache busting */ 
- $version = '1.0.0'; /*  You can dynamically generate this based on the file's modification time. */
- `` `
+
+```php
+echo __('Welcome to Bizzio Sync Plugin!', 'bizzio-sync');
+```
+
+- **Translation File Location**: `/languages/` directory within the plugin.
+- **Generating `.pot` Files**: Use tools like Poedit or WP-CLI to extract translatable strings and generate `.pot` files.
+
+### Adding Actions
+
+Actions are added using WordPress's `add_action()` function. Here’s how you can add an action using this plugin's structure:
+
+**Example of Adding an Action:**
+
+```php
+use BizzioSync\Bizzio_Sync_Hook_Loader;
+
+Bizzio_Sync_Hook_Loader::add_action('admin_init', 'remove_unwanted_menu_pages');
+
+/**
+ * Remove unwanted menu pages from the WordPress admin.
+ *
+ * @return void
+ */
+function remove_unwanted_menu_pages(): void {
+    remove_menu_page('edit-comments.php'); // Comments
+    remove_menu_page('edit.php'); // Posts
+}
+```
+
+### Void Functions
+
+For all functions that do not return any value, make sure to use the `void` return type declaration for clarity.
+
+**Example:**
+
+```php
+function sync_data_with_external_api(): void {
+    // Your code here
+}
+```
+
+## Class Structure and Namespaces
+
+### General Guidelines
+
+- **Namespace**: Always use the `BizzioSync` namespace to ensure there are no conflicts with other plugins.
+- **Autoloading**: Follow the PSR-4 standard for autoloading classes.
+
+### Adding New Classes
+
+If you need to add a new class, follow this structure:
+
+1. **Create the Class**: In the `includes` directory.
+2. **Namespace**: Use `BizzioSync` as the root namespace.
+3. **Register the Class**: Ensure it's registered using your autoloader or include it in the plugin's initialization file.
+
+**Example:**
+
+```php
+namespace BizzioSync;
+
+class Bizzio_Sync_Custom_Class {
+
+    public function __construct() {
+        // Initialization code
+    }
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+- **cURL Error 7**: Ensure your server can make external requests. Check firewall or hosting settings.
+- **Translation Not Working**: Make sure your `.mo` files are correctly placed in the `/languages/` directory.
+
+### Debugging Tips
+
+- Use `Bizzio_Sync_Logger::log()` to track events and diagnose issues.
+- Check the error logs in your hosting control panel for more detailed error information.
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Write your code with proper documentation and respect for existing structures.
+4. Submit a pull request.
+
+Please ensure that any code you submit is well-documented and follows the WordPress coding standards.
+
+---

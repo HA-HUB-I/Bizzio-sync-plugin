@@ -6,10 +6,10 @@
  * Version:     0.0.1
  * Author:      GCLD TEAM
  * Author URI:  https://gcld-workspace.slack.com/
- * Text Domain: Bizzio-sync
+ * Text Domain: bizzio-sync
  *
  *  @package tag:
- * Domain Path: //
+ * Domain Path: /languages
  */
 
 namespace BizzioSync;

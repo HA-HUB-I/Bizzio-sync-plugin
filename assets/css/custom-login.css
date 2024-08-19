@@ -13,7 +13,7 @@ body.login div#login {
     max-width: 400px;
     padding: 20px;
     margin: 0 auto;
-    border-radius: 8px;
+    border-radius: 18px;
     background: white;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
@@ -35,7 +35,7 @@ body.login input[type="password"] {
     font-size: 16px;
     padding: 10px 40px;
     border: 1px solid #e1e1e1;
-    border-radius: 5px;
+    border-radius: 15px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -52,8 +52,21 @@ body.login label[for="user_pass"]::before {
     color: #999;
 }
 
+body.login form {
+    margin-top: 20px;
+    margin-left: 0;
+    padding: 26px 24px;
+    font-weight: 400;
+    overflow: hidden;
+    background: #fff;
+    border: 0px solid #c3c4c7;
+    border-radius: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    width: 350px;
+}
+
 body.login label[for="user_pass"]::before {
-    content: "\f023"; /* FontAwesome icon for lock */
+    content: "\f007"; /* FontAwesome icon for lock */
     color: #999;
 }
 

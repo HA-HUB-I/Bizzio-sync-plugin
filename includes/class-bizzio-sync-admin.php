@@ -121,7 +121,7 @@ class Bizzio_Sync_Admin {
 							echo '</tr>';
 						}
 					} else {
-						echo '<tr><td colspan="2">No logs available.</td></tr>';
+						echo __('<tr><td colspan="2">No logs available.</td></tr>' , 'bizzio-sync');
 					}
 					?>
 				</tbody>
@@ -172,12 +172,12 @@ class Bizzio_Sync_Admin {
 	public function handle_clear_logs() {
 		/* Check user capability for security */
 		if ( ! current_user_can( 'manage_options' ) ) {
-			Bizzio_Sync_Logger::log( 'Unauthorized user' );
+			Bizzio_Sync_Logger::log(__( 'Unauthorized user', 'bizzio-sync' ) );
 		}
 
 		/* Clear the logs */
 		delete_option( 'bizzio_sync_logs' );
-		Bizzio_Sync_Logger::log( 'All logs cleared.' );
+		Bizzio_Sync_Logger::log(__( 'All logs cleared.' , 'bizzio-sync' ) );
 
 		/* Redirect back to the logs page */
 		wp_safe_redirect( admin_url( 'admin.php?page=bizzio-sync-logs' ) );
