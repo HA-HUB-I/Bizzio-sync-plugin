@@ -38,6 +38,26 @@ The **Bizzio Sync Plugin** is designed to help developers integrate custom synch
 
 ## Usage
 
+### Menu Example
+
+```php
+add_submenu_page(
+            'Bizzio Sync',          // Page title in browser tab
+            'Bizzio Sync Settings',          // Menu title in admin panel
+            'manage_options',       // Capability Role
+            'bizzio-sync',          // Menu slug in url bar
+            [$this, ' $${\color{red} admin_page}$$'],  // Callback function
+            'dashicons-update',     // Icon
+            100                     // Position
+        );
+```    
+```php
+public function $${\color{red} admin_page}$$() `#f03c15` { 
+
+    Menu Redender here
+
+    };
+```
 ### Bizzio_Sync_Logger
 
 `Bizzio_Sync_Logger` is a custom class provided by the plugin for logging events and activities. It is designed to be used within any part of the plugin to log important information.
@@ -59,23 +79,18 @@ Bizzio_Sync_Logger::log(__('Synchronization started.', 'bizzio-sync'));
 
 ### Custom Hooks
 
-You can add custom hooks and actions using the `Bizzio_Sync_Hook_Loader` class. This class is responsible for managing the hooks in an organized manner.
+You can add custom hooks and actions in the `Bizzio_Sync_Hooks` class. This class is responsible for managing the hooks in an organized manner.
 
-**Example of Adding a Custom Action:**
+**Example of Adding a Custom Hooks:**
 
 ```php
-use BizzioSync\Bizzio_Sync_Hook_Loader;
 
-Bizzio_Sync_Hook_Loader::add_action('init', 'my_custom_function');
+  public function function remove_unwanted_menu_pages(): void {
+    remove_menu_page('edit-comments.php'); // Comments
+    remove_menu_page('edit.php'); // Posts
+  }
+  Bizzio_Sync_Logger::log (_( 'Admin Menu page removed' , 'bizzio-sync' ));
 
-/**
- * Function to be executed during the 'init' hook.
- *
- * @return void
- */
-function my_custom_function(): void {
-    // Custom code here
-}
 ```
 
 ### Translating Strings
@@ -106,22 +121,17 @@ echo __('Welcome to Bizzio Sync Plugin!', 'bizzio-sync');
 ### Adding Actions
 
 Actions are added using WordPress's `add_action()` function. Here’s how you can add an action using this plugin's structure:
+Hook Registration: Inside the constructor, add_action() and add_filter() functions are used to register WordPress hooks (actions and filters) with the class methods.
 
 **Example of Adding an Action:**
 
+The __construct() method is used to set up initial values and configurations for the object.
+
+
 ```php
-use BizzioSync\Bizzio_Sync_Hook_Loader;
-
-Bizzio_Sync_Hook_Loader::add_action('admin_init', 'remove_unwanted_menu_pages');
-
-/**
- * Remove unwanted menu pages from the WordPress admin.
- *
- * @return void
- */
-function remove_unwanted_menu_pages(): void {
-    remove_menu_page('edit-comments.php'); // Comments
-    remove_menu_page('edit.php'); // Posts
+public function __construct() {
+    //initial action here
+add_action('admin_init',  [$this, 'remove_unwanted_menu_pages' ]);
 }
 ```
 
@@ -174,7 +184,7 @@ class Bizzio_Sync_Custom_Class {
 
 ### Debugging Tips
 
-- Use `Bizzio_Sync_Logger::log()` to track events and diagnose issues.
+- Use `Bizzio_Sync_Logger::log(__('Log text' , 'bizzio-sync'));` to track events and diagnose issues with translate support.
 - Check the error logs in your hosting control panel for more detailed error information.
 
 ## Contributing
