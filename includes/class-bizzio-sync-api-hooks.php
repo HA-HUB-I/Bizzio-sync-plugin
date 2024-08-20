@@ -39,17 +39,17 @@ class BizzioSyncApiHooks {
 			Bizzio_Sync_Logger::log(__( 'Invalid nonce' ,  'bizzio-sync' ) );
 		}
 
-        $args = array(
-            'limit' => 3,
-        );
-        $products = wc_get_products( $args );
+        $products = wc_get_products( array( 'limit'  => -1, ) );
+		$product_count = count( $products );
+		// foreach ( $products as $product ){  
 		 $data = array(
-			 'id'     => 'example_value',
-			 'status' => 'completed',
-			 'NOW'    => current_time('h:m:s:d-m-Y'),
-			 'Total'  => $products ,
-		 );
-
+			 'count' =>  $product_count,
+			//  'id'     => $product->get_id(),
+			//  'status' => $product->get_status(),
+			//  'Name'  => $product->get_title(),
+		);
+	// }
+    
 		 // Set up the API URL (validate the URL first)
 		 $url = apply_filters( 'POST_URL_REQUEST' , 'http://change.me/'); // Ensure this URL is correct
 		 if ( ! wp_http_validate_url( $url ) ) {

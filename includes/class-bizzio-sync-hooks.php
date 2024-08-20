@@ -13,7 +13,7 @@ class Bizzio_Sync_Hooks {
 		add_action( 'bizzio_customized_menu', array( $this, 'handle_custom_hook_one' ) );
 		/* Example custom action */
 		Bizzio_Sync_Logger::log (_( 'Bizzio Customized Enable' , 'bizzio-sync' ));
-		error_log( 'Bizzio Customized Enable' );
+		/* error_log( 'Bizzio Customized Enable' ); */
 	}
 
 	public function bizzio_sync_load_textdomain() {
