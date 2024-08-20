@@ -32,7 +32,7 @@ class Bizzio_Sync_Admin {
 	public function add_admin_menu() {
 		add_menu_page(
 			'Bizzio Sync',
-			'Bizzio Sync',
+			'Bizzio Sync Settings',
 			'manage_options',
 			'bizzio-sync',
 			array( $this, 'admin_page' ),
@@ -87,6 +87,12 @@ class Bizzio_Sync_Admin {
 					<tr valign="top">
 						<th scope="row">Customized</th>
 						<td><input type="checkbox" name="enable_sync" value="1" <?php checked( get_option( 'bizzio_enable_sync' ), 1 ); ?> /></td>
+					</tr>
+					<tr valign="top">
+						<th scope="row">API PREFIX</th>
+						<td><?php 
+						 $current_prefix = apply_filters('rest_url_prefix' , 'wp-json');
+						echo  esc_html($current_prefix); ?></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row">Enable Logging</th>

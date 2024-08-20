@@ -21,3 +21,13 @@ class Bizzio_Sync_Hooks {
 	}
 }
 
+
+// Set REST API prefix
+add_filter('rest_url_prefix', function () {
+    return defined('REST_API_PREFIX') ? REST_API_PREFIX : 'wp-json2';
+});
+
+// Define the URL filter
+add_filter('POST_URL_REQUEST', function ($url) {
+    return defined('POST_URL_REQUEST') ? POST_URL_REQUEST : $url;
+});

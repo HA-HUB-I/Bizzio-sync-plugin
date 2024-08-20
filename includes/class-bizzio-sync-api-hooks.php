@@ -26,7 +26,7 @@ class BizzioSyncApiHooks {
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<?php wp_nonce_field( 'bizzio_sync_send_data_nonce', 'bizzio_sync_send_data_nonce' ); ?>
 				<input type="hidden" name="action" value="bizzio_sync_send_data">
-				<input type="submit" class="button-primary" value="Sync Product">
+				<input type="submit" class="button-primary" value="Get Product">
 			</form>
 		</div>
 		<?php
@@ -51,9 +51,10 @@ class BizzioSyncApiHooks {
 		 );
 
 		 // Set up the API URL (validate the URL first)
-		 $url = 'http://example.test/'; // Ensure this URL is correct
+		 $url = apply_filters( 'POST_URL_REQUEST' , 'http://change.me/'); // Ensure this URL is correct
 		 if ( ! wp_http_validate_url( $url ) ) {
-			 wp_die( 'Invalid URL' );
+			 /* wp_die( 'Invalid URL' ); */
+			 Bizzio_Sync_Logger::log(__( 'Invalid POST URL: '  . esc_url($url),  'bizzio-sync' ) );
 		 }
 
 		 // Set up headers, including secure authentication
@@ -83,7 +84,7 @@ class BizzioSyncApiHooks {
 		 if ( $response_code === 200 ) {
 			 /*  echo '<div class="updated notice"><p>Data sent successfully!</p></div>'; */
 			 wp_safe_redirect( add_query_arg( 'message', 'success', wp_get_referer() ) );
-			 Bizzio_Sync_Logger::log(__( 'Data sent successfully!' , 'bizzio-sync' ) );
+			 Bizzio_Sync_Logger::log(__( 'Data sent successfully!: '  . esc_url($url),   'bizzio-sync' ) );
 			 exit;
 		 } else {
 			 /* echo '<div class="error notice"><p>Failed to send data. HTTP Status: ' . esc_html($response_code) . '</p></div>'; */
