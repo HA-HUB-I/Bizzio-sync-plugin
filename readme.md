@@ -39,20 +39,20 @@ The **Bizzio Sync Plugin** is designed to help developers integrate custom synch
 ## Usage
 
 ### Menu Example
-
+class Bizzio_Sync_Admin - class-bizzio-sync-admin.php 
 ```php
 add_submenu_page(
             'Bizzio Sync',          // Page title in browser tab
             'Bizzio Sync Settings',          // Menu title in admin panel
             'manage_options',       // Capability Role
             'bizzio-sync',          // Menu slug in url bar
-            [$this, ' $${\color{red} admin_page}$$'],  // Callback function
+            [$this, ' admin_page'],  // Callback function
             'dashicons-update',     // Icon
             100                     // Position
         );
 ```    
 ```php
-public function $${\color{red} admin_page}$$() `#f03c15` { 
+public function  admin_page() { 
 
     Menu Redender here
 
@@ -79,7 +79,7 @@ Bizzio_Sync_Logger::log(__('Synchronization started.', 'bizzio-sync'));
 
 ### Custom Hooks
 
-You can add custom hooks and actions in the `Bizzio_Sync_Hooks` class. This class is responsible for managing the hooks in an organized manner.
+You can add custom hooks and actions in the `Bizzio_Sync_Hooks` or ` Bizzio_Sync_Hook_Loader` class. This class is responsible for managing the hooks in an organized manner.
 
 **Example of Adding a Custom Hooks:**
 

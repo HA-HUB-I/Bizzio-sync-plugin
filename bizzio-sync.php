@@ -30,12 +30,6 @@ define( 'BIZZIO_SYNC_URL', plugin_dir_url( __FILE__ ) );
  */
 
 require_once BIZZIO_SYNC_PATH . 'includes/hooks/class-bizzio-sync-hook-loader.php';
-
-/*
- * require_once BIZZIO_SYNC_PATH . 'includes/hooks/class-bizzio-sync-core-hooks.php';
- *  require_once BIZZIO_SYNC_PATH . 'includes/hooks/class-bizzio-sync-custom-hooks.php';
-*/
-
 require_once BIZZIO_SYNC_PATH . 'includes/class-bizzio-sync-init.php';
 require_once BIZZIO_SYNC_PATH . 'includes/class-bizzio-sync-activation.php';
 require_once BIZZIO_SYNC_PATH . 'includes/class-bizzio-custom-login.php';

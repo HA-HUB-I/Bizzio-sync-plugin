@@ -51,7 +51,7 @@ class BizzioSyncApiHooks {
 	// }
     
 		 // Set up the API URL (validate the URL first)
-		 $url = apply_filters( 'POST_URL_REQUEST' , 'http://change.me/'); // Ensure this URL is correct
+		 $url = apply_filters( 'POST_URL_REQUEST' , 'http://change.me/'); // Ensure this URL is correct set in ENV
 		 if ( ! wp_http_validate_url( $url ) ) {
 			 /* wp_die( 'Invalid URL' ); */
 			 Bizzio_Sync_Logger::log(__( 'Invalid POST URL: '  . esc_url($url),  'bizzio-sync' ) );
